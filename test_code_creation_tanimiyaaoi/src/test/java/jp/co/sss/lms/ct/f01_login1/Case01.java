@@ -1,6 +1,7 @@
 package jp.co.sss.lms.ct.f01_login1;
 
 import static jp.co.sss.lms.ct.util.WebDriverUtils.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -37,6 +38,8 @@ public class Case01 {
 	void test01() {
 		// ログイン画面を開く
 		goTo("http://localhost:8080/lms");
+		// 検証
+		assertEquals("ログイン | LMS",webDriver.getTitle());
 		// スクリーンショットをevidenceフォルダに格納する
 		getEvidence(new Object() {});
 	}
