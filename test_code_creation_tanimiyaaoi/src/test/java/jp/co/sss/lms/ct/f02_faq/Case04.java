@@ -71,6 +71,7 @@ public class Case04 {
 		// ドロップダウン内の「ヘルプ」を押下
 		webDriver.findElement(By.linkText("ヘルプ")).click();
 		assertEquals("http://localhost:8080/lms/help", webDriver.getCurrentUrl());
+		assertEquals("ヘルプ | LMS", webDriver.getTitle());
 		getEvidence(new Object() {});
 		
 	}
