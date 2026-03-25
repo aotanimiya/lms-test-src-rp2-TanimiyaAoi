@@ -55,14 +55,14 @@ public class Case02 {
 		// 誤ったパスワードを入力
 		webDriver.findElement(By.id("password")).sendKeys("NG01");
 		// スクリーンショットをevidenceフォルダに格納する
-		getEvidence(new Object() {});
+		getEvidence(new Object() {} ,"01");
 		// ログインボタンを押下
 		webDriver.findElement(By.className("btn-primary")).click();
 		//エラーメッセージ検証
 		WebElement element = webDriver.findElement(By.className("help-inline"));
 		assertEquals("* ログインに失敗しました。",element.getText());
 		//エラーメッセージを撮影
-		getEvidence(new Object() {});
+		getEvidence(new Object() {} ,"02");
 		
 	}
 
