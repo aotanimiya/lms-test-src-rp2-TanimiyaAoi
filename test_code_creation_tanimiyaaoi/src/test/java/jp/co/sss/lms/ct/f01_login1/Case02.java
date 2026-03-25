@@ -42,8 +42,6 @@ public class Case02 {
 		goTo("http://localhost:8080/lms");
 		// 検証
 		assertEquals("ログイン | LMS",webDriver.getTitle());
-		// スクリーンショットをevidenceフォルダに格納する
-		getEvidence(new Object() {});
 	}
 
 	@Test
