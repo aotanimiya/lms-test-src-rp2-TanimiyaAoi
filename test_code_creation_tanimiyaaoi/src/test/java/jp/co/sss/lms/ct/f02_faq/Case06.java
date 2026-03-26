@@ -15,8 +15,6 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import jp.co.sss.lms.ct.util.WebDriverUtils;
-
 /**
  * 結合テスト よくある質問機能
  * ケース06
@@ -105,7 +103,7 @@ public class Case06 {
 		// カテゴリ検索欄の【研修関係】リンクをクリック
 		webDriver.findElement(By.linkText("【研修関係】")).click();
 		// 検索結果が表示されるまで最大10秒待機する
-		WebDriverUtils.visibilityTimeout(By.className("table"), 10);
+		visibilityTimeout(By.className("table"), 10);
 		getEvidence(new Object() {}, "01");
 		
 		// 表示された検索結果をリストに格納する
@@ -117,7 +115,7 @@ public class Case06 {
 		assertTrue(rows.get(1).getText().contains("研修の申し込みはどのようにすれば良いですか"));
 		
 		//　エビデンスに検索結果が移るように画面をスクロール
-		WebDriverUtils.scrollTo("180");
+		scrollTo("180");
 		getEvidence(new Object() {}, "02");
 	}
 
@@ -127,7 +125,7 @@ public class Case06 {
 	void test06() {
 		// 「Q.キャンセル料・途中退校について」の質問部分(dtタグ)をクリック
 		webDriver.findElement(By.xpath("//span[contains(text(), 'キャンセル料・途中退校について')]")).click();
-		WebDriverUtils.visibilityTimeout(By.id("answer-h[${status.index}]"), 5);
+		visibilityTimeout(By.id("answer-h[${status.index}]"), 5);
 		
 		// 回答が表示されたことを検証するため、該当の要素を特定
 		WebElement answer = webDriver.findElement(By.id("answer-h[${status.index}]"));
@@ -137,7 +135,7 @@ public class Case06 {
 		assertTrue(answer.getText().contains("受講者の退職や解雇等、"));
 		
 		//　エビデンスに検索結果が移るように画面をスクロール
-		WebDriverUtils.scrollTo("220");
+		scrollTo("220");
 		getEvidence(new Object() {});
 				
 	}

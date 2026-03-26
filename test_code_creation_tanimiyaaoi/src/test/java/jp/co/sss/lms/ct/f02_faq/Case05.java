@@ -12,8 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.openqa.selenium.By;
 
-import jp.co.sss.lms.ct.util.WebDriverUtils;
-
 
 /**
  * 結合テスト よくある質問機能
@@ -107,7 +105,7 @@ public class Case05 {
 		webDriver.findElement(By.cssSelector("input[value='検索']")).click();
 		
 		// 検索結果が表示されるまで最大10秒待機する
-		WebDriverUtils.visibilityTimeout(By.className("table"), 10);
+		visibilityTimeout(By.className("table"), 10);
 		
 		// よくある質問画面が正常に表示されているか検証
 		assertEquals("よくある質問 | LMS", webDriver.getTitle());
@@ -116,10 +114,10 @@ public class Case05 {
 		//検索結果に「助成金」を含まないデータが【ない】ことを検証
 		assertTrue(webDriver.findElements(By.xpath("//tbody/tr[not(contains(., '助成金'))]")).isEmpty());
 		//　エビデンスに検索結果が移るように画面をスクロール
-		WebDriverUtils.scrollTo("180");
+		scrollTo("180");
 		getEvidence(new Object() {}, "02");
 		//スクロースした画面を初期位置に戻す
-		WebDriverUtils.scrollTo("0");
+		scrollTo("0");
 
 	}
 	
