@@ -12,6 +12,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.openqa.selenium.By;
 
+import jp.co.sss.lms.ct.util.WebDriverUtils;
+
 
 /**
  * 結合テスト よくある質問機能
@@ -42,7 +44,7 @@ public class Case05 {
 		goTo("http://localhost:8080/lms");
 		// 検証
 		assertEquals("ログイン | LMS",webDriver.getTitle());
-//		getEvidence(new Object() {});
+		getEvidence(new Object() {});
 	}
 
 	@Test
@@ -53,6 +55,8 @@ public class Case05 {
 		webDriver.findElement(By.id("loginId")).sendKeys("StudentAA01");
 		// パスワードを入力
 		webDriver.findElement(By.id("password")).sendKeys("StudentAA0101");
+		// ログイン前の画面を撮影
+		getEvidence(new Object() {} ,"01");
 		// ログインボタンを押下
 		webDriver.findElement(By.className("btn-primary")).click();
 		
@@ -60,7 +64,8 @@ public class Case05 {
 		assertEquals("http://localhost:8080/lms/course/detail", webDriver.getCurrentUrl());
 		// 詳細画面が開いているかの検証
 		assertEquals("コース詳細 | LMS", webDriver.getTitle());
-//		getEvidence(new Object() {});
+		// 詳細画面の撮影
+		getEvidence(new Object() {}, "02");
 	}
 	
 	@Test
@@ -73,7 +78,7 @@ public class Case05 {
 		webDriver.findElement(By.linkText("ヘルプ")).click();
 		assertEquals("http://localhost:8080/lms/help", webDriver.getCurrentUrl());
 		assertEquals("ヘルプ | LMS", webDriver.getTitle());
-//		getEvidence(new Object() {});
+		getEvidence(new Object() {});
 
 	}
 
@@ -89,20 +94,47 @@ public class Case05 {
 		}
 		assertEquals("http://localhost:8080/lms/faq", webDriver.getCurrentUrl());
 		assertEquals("よくある質問 | LMS", webDriver.getTitle());
-//		getEvidence(new Object() {});
+		getEvidence(new Object() {});
 	}
 	@Test
 	@Order(5)
 	@DisplayName("テスト05 キーワード検索で該当キーワードを含む検索結果だけ表示")
 	void test05() {
-		// TODO ここに追加
+		// キーワードフォームに「助成金」と入力
+		webDriver.findElement(By.id("form")).sendKeys("助成金");
+		getEvidence(new Object() {}, "01");
+		//検索ボタンを押下
+		webDriver.findElement(By.cssSelector("input[value='検索']")).click();
+		
+		// 検索結果が表示されるまで最大10秒待機する
+		WebDriverUtils.visibilityTimeout(By.className("table"), 10);
+		
+		// よくある質問画面が正常に表示されているか検証
+		assertEquals("よくある質問 | LMS", webDriver.getTitle());
+		//検索結果に「助成金」を含むデータが【ある】ことを検証
+		assertTrue(webDriver.findElement(By.className("table")).getText().contains("助成金"));
+		//検索結果に「助成金」を含まないデータが【ない】ことを検証
+		assertTrue(webDriver.findElements(By.xpath("//tbody/tr[not(contains(., '助成金'))]")).isEmpty());
+		//　エビデンスに検索結果が移るように画面をスクロール
+		WebDriverUtils.scrollTo("180");
+		getEvidence(new Object() {}, "02");
+		//スクロースした画面を初期位置に戻す
+		WebDriverUtils.scrollTo("0");
+
 	}
 	
 	@Test
 	@Order(6)
 	@DisplayName("テスト06 「クリア」ボタン押下で入力したキーワードを消去")
 	void test06() {
-		// TODO ここに追加
+		//クリアボタンを押下
+		webDriver.findElement(By.cssSelector("input[value='クリア']")).click();
+		//キーワード欄が空欄になっているかを確認
+		assertEquals("", webDriver.findElement(By.id("form")).getAttribute("value"));
+		
+		// よくある質問画面が正常に表示されているか検証
+		assertEquals("よくある質問 | LMS", webDriver.getTitle());
+		getEvidence(new Object() {});
 	}
 
 }
